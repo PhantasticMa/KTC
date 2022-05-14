@@ -5,21 +5,27 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     float horizontal;
-    float speed = 8f;
+    [SerializeField] float speed = 8f;
     bool isFacingRight = true;
 
     [SerializeField] Rigidbody2D rb;
-
+    [SerializeField] Animator animator;
     // Update is called once per frame
     void Update()
     {
-        horizontal = Input.GetAxisRaw("Horizontal");
+        Move();
         Flip();
     }
 
     void FixedUpdate()
     {
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+    }
+
+    void Move()
+    {
+        horizontal = Input.GetAxisRaw("Horizontal");
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
     }
 
     private void Flip()
